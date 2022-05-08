@@ -1,12 +1,12 @@
 <template>
   <div class="home">
     <h1>My Recipes</h1>
-    <button>Add new Recipe</button>
+    <button @click="togglePopup">Add new Recipe</button>
     <div class="recipes">
       <!-- Recipes to go here! -->
     </div>
 
-    <div class="add-recipe-popup">
+    <div class="add-recipe-popup" v-if="popupOpen">
       <div class="popup-content">
         <h2>Add new recipe</h2>
 
@@ -38,14 +38,40 @@
           </div>
 
           <button type="submit">Add Recipe</button>
-          <button type="button">Close</button>
+          <button type="button" @click="togglePopup">Close</button>
         </form>
       </div>
     </div>
   </div>
 </template>
 
-<script></script>
+<script>
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const newRecipe = ref({
+      title: '',
+      description: '',
+      ingredients: [],
+      method: [],
+      ingredientRows: 1,
+      methodRows: 1
+    });
+    const popupOpen = ref(false);
+
+    const togglePopup = () => {
+      popupOpen.value = !popupOpen.value;
+    }
+
+    return {
+      newRecipe,
+      togglePopup,
+      popupOpen
+    }
+  }
+}
+</script>
 <style>
 .home {
   padding: 1rem;
