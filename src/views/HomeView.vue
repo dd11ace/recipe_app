@@ -61,41 +61,41 @@ function addNewRecipe() {
       </div>
     </div>
 
-    <div class="add-recipe-popup" v-if="popupOpen">
-      <div class="popup-content">
-        <h2>Add new recipe</h2>
+    <div class="home-view__popup" v-if="popupOpen">
+      <div class="home-view__popup-content">
+        <h2 class="home-view__popup-title">Add new recipe</h2>
 
-        <form @submit.prevent="addNewRecipe">
-          <div class="group">
+        <el-form @submit.prevent="addNewRecipe">
+          <div class="home-view__popup-group">
             <label>Title</label>
-            <input type="text" v-model="newRecipe.title">
+            <input class="home-view__popup-input" type="text" v-model="newRecipe.title">
           </div>
 
-          <div class="group">
-            <label>Description</label>
-            <textarea v-model="newRecipe.description"></textarea>
+          <div class="home-view__popup-group">
+            <label class="home-view__popup-label">Description</label>
+            <textarea class="home-view__popup-input home-view__popup-input--textarea" v-model="newRecipe.description"></textarea>
           </div>
 
-          <div class="group">
-            <label>Ingredients</label>
-            <div class="ingredient" v-for="i in newRecipe.ingredientRows" :key="i">
-              <input type="text" v-model="newRecipe.ingredients[i - 1]">
+          <div class="home-view__popup-group">
+            <label class="home-view__popup-label">Ingredients</label>
+            <div class="home-view__popup-ingredient" v-for="i in newRecipe.ingredientRows" :key="i">
+              <input class="home-view__popup-input" type="text" v-model="newRecipe.ingredients[i - 1]">
             </div>
-            <button type="button" @click="addNewIngredient">Add Ingredient</button>
+            <el-button type="button" @click="addNewIngredient">Add Ingredient</el-button>
           </div>
 
-          <div class="group">
-            <label>Method</label>
-            <div class="method" v-for="i in newRecipe.methodRows" :key="i">
-              <textarea v-model="newRecipe.method[i - 1]"></textarea>
+          <div class="home-view__popup-group">
+            <label class="home-view__popup-label">Method</label>
+            <div class="home-view__popup-method" v-for="i in newRecipe.methodRows" :key="i">
+              <textarea class="home-view__popup-input home-view__popup-input--textarea" v-model="newRecipe.method[i - 1]"></textarea>
             </div>
-            <button type="button" @click="addNewStep">Add step</button>
+            <el-button type="button" @click="addNewStep">Add step</el-button>
           </div>
 
-          <button type="submit">Add Recipe</button>
-          <button type="button" @click="togglePopup">Close</button>
+          <el-button type="primary" @click="addNewRecipe">Add Recipe</el-button>
+          <el-button type="danger" @click="togglePopup">Close</el-button>
           
-        </form>
+        </el-form>
       </div>
     </div>
   </div>
@@ -135,57 +135,52 @@ function addNewRecipe() {
     line-height: 1.4;
     margin-bottom: 1rem;
   }
-}
-.add-recipe-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.add-recipe-popup .popup-content {
-  background-color: #081c33;
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 100%;
-  min-width: 768px;
-}
+  &__popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__popup-content {
+    background-color: #081c33;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    min-width: 768px;
+  }
 
-.popup-content h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
+  &__popup-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
 
-.popup-content .group {
-  margin-bottom: 1rem;
-}
+  &__popup-group {
+    margin-bottom: 1rem;
+  }
 
-.popup-content .group label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
+  &__popup-label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  &__popup-input{
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+  }
 
-.popup-content .group input,
-.popup-content .group textarea {
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-}
-
-.popup-content .group textarea {
-  height: 100px;
-  resize: none;
-}
-
-.popup-content button[type="submit"] {
-  margin-right: 1rem;
+  &__popup-input--textarea{
+    height: 100px;
+    resize: none;
+  }
 }
 </style>
