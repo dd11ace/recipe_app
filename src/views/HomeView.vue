@@ -26,7 +26,9 @@ function addNewStep() {
 }
 
 function addNewRecipe() {
-  newRecipe.value.slug = newRecipe.value.title.toLowerCase().replace(/\s/g, '-');
+  newRecipe.value.slug = newRecipe.value
+  .title.toLowerCase()
+  .replace(/\s/g, '-');
 
   if(newRecipe.value.slug === '') {
     alert('Please enter a title');
@@ -168,7 +170,7 @@ function addNewRecipe() {
     display: block;
     margin-bottom: 0.5rem;
   }
-  
+
   &__popup-input{
     display: block;
     width: 100%;
