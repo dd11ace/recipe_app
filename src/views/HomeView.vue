@@ -1,13 +1,62 @@
+<script setup>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+
+const newRecipe = ref({
+  title: '',
+  description: '',
+  ingredients: [],
+  method: [],
+  ingredientRows: 1,
+  methodRows: 1
+});
+const popupOpen = ref(false);
+const store = useStore();
+
+function togglePopup() {
+  popupOpen.value = !popupOpen.value;
+}
+
+function addNewIngredient() {
+  newRecipe.value.ingredientRows++;
+}
+
+function addNewStep() {
+  newRecipe.value.methodRows++;
+}
+
+function addNewRecipe() {
+  newRecipe.value.slug = newRecipe.value.title.toLowerCase().replace(/\s/g, '-');
+
+  if(newRecipe.value.slug === '') {
+    alert('Please enter a title');
+    return;
+  }
+
+  store.commit('ADD_RECIPE', { ...newRecipe.value });
+
+  newRecipe.value = {
+    title: '',
+    description: '',
+    ingredients: [],
+    method: [],
+    ingredientRows: 1,
+    methodRows: 1
+  };
+
+  togglePopup();
+}
+</script>
 <template>
-  <div class="home">
-    <h1>My Recipes</h1>
-    <button @click="togglePopup">Add new Recipe</button>
-    <div class="recipes">
-      <div class="card" v-for="recipe in $store.state.recipes" :key="recipe.slug">
-        <h2>{{ recipe.title }}</h2>
-        <p>{{ recipe.description }}</p>
+  <div class="home-view">
+    <h1 class="home-view__title">My Recipes</h1>
+    <el-button type="primary" @click="togglePopup">Add new Recipe</el-button>
+    <div class="home-view__recipes">
+      <div class="home-view__recipe-card" v-for="recipe in $store.state.recipes" :key="recipe.slug">
+        <h2 class="home-view__recipe-title">{{ recipe.title }}</h2>
+        <p class="home-view__recipe-paragraph">{{ recipe.description }}</p>
         <router-link :to="`/recipe/${recipe.slug}`">
-          <button>View Recipe</button>
+          <el-button>View Recipe</el-button>
         </router-link>
       </div>
     </div>
@@ -45,111 +94,48 @@
 
           <button type="submit">Add Recipe</button>
           <button type="button" @click="togglePopup">Close</button>
+          
         </form>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { ref } from 'vue';
-import { useStore } from 'vuex';
-
-export default {
-  neme: 'Home',
-  setup() {
-    const newRecipe = ref({
-      title: '',
-      description: '',
-      ingredients: [],
-      method: [],
-      ingredientRows: 1,
-      methodRows: 1
-    });
-    const popupOpen = ref(false);
-    const store = useStore();
-
-    const togglePopup = () => {
-      popupOpen.value = !popupOpen.value;
-    }
-
-    const addNewIngredient = () => {
-      newRecipe.value.ingredientRows++;
-    }
-
-    const addNewStep = () => {
-      newRecipe.value.methodRows++;
-    }
-
-    const addNewRecipe = () => {
-      newRecipe.value.slug = newRecipe.value.title.toLowerCase().replace(/\s/g, '-');
-
-      if(newRecipe.value.slug === '') {
-        alert('Please enter a title');
-        return;
-      }
-
-      store.commit('ADD_RECIPE', { ...newRecipe.value });
-
-      newRecipe.value = {
-        title: '',
-        description: '',
-        ingredients: [],
-        method: [],
-        ingredientRows: 1,
-        methodRows: 1
-      };
-
-      togglePopup();
-    }
-
-    return {
-      newRecipe,
-      togglePopup,
-      popupOpen,
-      addNewIngredient,
-      addNewStep,
-      addNewRecipe
-    }
-  }
-}
-</script>
-<style>
-.home {
+<style lang="scss">
+.home-view {
   padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
 
-h1 {
-  font-size: 3rem;
-  margin-bottom: 32px;
-}
+  &__title {
+    font-size: 3rem;
+    margin-bottom: 32px;
+  }
 
-.recipes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
+  &__recipes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 
-.recipes .card {
-  padding: 1rem;
-  border-radius: 5px;
-  margin: 1rem;
-  background-color: #081c33;
-}
+  &__recipe-card {
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem;
+    background-color: #081c33;
+  }
 
-.recipes .card h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
+  &__recipe-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
 
-.recipes .card p {
-  font-size: 1.125rem;
-  line-height: 1.4;
-  margin-bottom: 1rem;
+  &__recipe-paragraph {
+    font-size: 1.125rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
 }
-
 .add-recipe-popup {
   position: fixed;
   top: 0;
