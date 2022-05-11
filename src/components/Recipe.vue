@@ -6,16 +6,16 @@
         <hr class="recipe__hr">
         <div class="recipe__ingredients">
             <h3 class="recipe__title">Ingredients</h3>
-            <ul class="recipe__ingredients-ul">
-                <li class="recipe__ingredients-ul-li" v-for="(ingredient, i) in recipe.ingredients" :key="i">
+            <ul class="recipe__ingredients-list">
+                <li class="recipe__ingredients-list-item" v-for="(ingredient, i) in recipe.ingredients" :key="i">
                     {{ingredient}}
                 </li>
             </ul>
         </div>
         <div class="recipe__method">
             <h3 class="recipe__title">Method</h3>
-            <ol class="recipe__ingredients-ol">
-                <li class="recipe__ingredients-ol-li" v-for="(step, i) in recipe.method" :key="i">
+            <ol class="recipe__methods">
+                <li class="recipe__methods-list-item" v-for="(step, i) in recipe.method" :key="i">
                     <span v-html="cleanText(step)"></span>
                 </li>
             </ol>
@@ -64,13 +64,13 @@ export default {
         margin-bottom: 1rem;
     }
 
-    &__ingredients-ul-li {
+    &__ingredients-list-item {
         list-style-position: inside;
         line-height: 1.4;
         margin-bottom: 1rem;
     }
 
-    &__ingredients-ol-li {
+    &__methods-list-item {
         margin-bottom: 2rem;
         padding-bottom: 1rem;
         list-style-position: inside;

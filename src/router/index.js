@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/recipe/:slug',
     name: 'Recipe',
-    component: () => import('../views/Recipe.vue')
+    component: () => import('../components/Recipe.vue')
   }
 ]
 
